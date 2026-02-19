@@ -67,7 +67,8 @@ src/main/java/edu/eci/arsw/blueprints
 
 - Mantén el contrato de la interfaz `BlueprintPersistence`.  
 
-  PostgresBlueprintPersistence implementa exactamente la misma interfaz BlueprintPersistence, con los mismos métodos (saveBlueprint, getBlueprint, getBlueprintsByAuthor, getAllBlueprints, addPoint), gracias a eso BlueprintServices y el resto de la aplicación no necesitaron ningún cambio y todo siguió funcionando igual
+  PostgresBlueprintPersistence implementa exactamente la misma interfaz BlueprintPersistence, con los mismos métodos (saveBlueprint, getBlueprint, getBlueprintsByAuthor, getAllBlueprints, addPoint), gracias a eso BlueprintServices y el resto de la aplicación no necesitaron ningún cambio y todo siguió funcionando igual como podemos ver en la siguiente imagen:
+  ![](images/0.png)
 
 ### 3. Buenas prácticas de API REST
 - Cambia el path base de los controladores a `/api/v1/blueprints`.  
