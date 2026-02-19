@@ -99,8 +99,22 @@ src/main/java/edu/eci/arsw/blueprints
 ### 5. Filtros de *Blueprints*
 - Implementa filtros:
   - **RedundancyFilter**: elimina puntos duplicados consecutivos.  
+
+    Este ya estaba hecho solo se activa cuando corres la app con el perfil redundancy, básicamente recorre la lista de puntos y elimina los que estén repetidos justo después del anterior, O sea, si tienes (1,1),(1,1),(3,3) lo deja en (1,1),(3,3), solo borra los repetidos consecutivos, si todos los puntos son diferentes no toca nada
+
   - **UndersamplingFilter**: conserva 1 de cada 2 puntos.  
+
+    Este también ya estaba implementado y se activa con el perfil undersampling, es más fuerte que el anterior porque simplemente se queda con 1 de cada 2 puntos (los de índice par), sin importar si están repetidos o no, entonces si tienes 6 puntos siempre te va a devolver 3
+
+
 - Activa los filtros mediante perfiles de Spring (`redundancy`, `undersampling`).  
+
+    Para hacer una comparacion de los diferentes filtros inyectamos una nueva consulta y asi es como se ve normalmente:
+  ![](images/normal.png)
+    Asi es como se ve con el filtro de Redundancy:
+  ![](images/redundancy.png)
+    Y asi es como se ve con el filtro de Undersampling:
+  ![](images/undersampling.png)
 
 ---
 
