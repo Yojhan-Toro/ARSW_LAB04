@@ -56,8 +56,18 @@ src/main/java/edu/eci/arsw/blueprints
 
 ### 2. Migración a persistencia en PostgreSQL
 - Configura una base de datos PostgreSQL (puedes usar Docker).  
+
+  Para la base de datos usé Docker con un docker-compose.yml que levanta PostgreSQL 16 con el usuario, la contraseña y la base de datos ya listos, entonces con un simple docker compose up -d ya queda todo funcionando, sin tener que instalar nada más
+
+
 - Implementa un nuevo repositorio `PostgresBlueprintPersistence` que reemplace la versión en memoria.  
+
+  Creé la clase PostgresBlueprintPersistence usando Spring Data JPA para conectarme a PostgreSQL, también hice BlueprintEntity y PointEmbeddable, que son las clases que JPA usa para mapear los objetos a tablas, y BlueprintJpaRepository, que básicamente genera las consultas SQL automáticamente, le puse @Primary para que Spring use esta implementación en vez de la que estaba en memoria, pero sin borrar nada de lo anterior
+
+
 - Mantén el contrato de la interfaz `BlueprintPersistence`.  
+
+  PostgresBlueprintPersistence implementa exactamente la misma interfaz BlueprintPersistence, con los mismos métodos (saveBlueprint, getBlueprint, getBlueprintsByAuthor, getAllBlueprints, addPoint), gracias a eso BlueprintServices y el resto de la aplicación no necesitaron ningún cambio y todo siguió funcionando igual
 
 ### 3. Buenas prácticas de API REST
 - Cambia el path base de los controladores a `/api/v1/blueprints`.  
