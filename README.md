@@ -56,8 +56,19 @@ src/main/java/edu/eci/arsw/blueprints
 
 ### 2. Migración a persistencia en PostgreSQL
 - Configura una base de datos PostgreSQL (puedes usar Docker).  
+
+  Para la base de datos usé Docker con un docker-compose.yml que levanta PostgreSQL 16 con el usuario, la contraseña y la base de datos ya listos, entonces con un simple docker compose up -d ya queda todo funcionando, sin tener que instalar nada más
+
+
 - Implementa un nuevo repositorio `PostgresBlueprintPersistence` que reemplace la versión en memoria.  
+
+  Creé la clase PostgresBlueprintPersistence usando Spring Data JPA para conectarme a PostgreSQL, también hice BlueprintEntity y PointEmbeddable, que son las clases que JPA usa para mapear los objetos a tablas, y BlueprintJpaRepository, que básicamente genera las consultas SQL automáticamente, le puse @Primary para que Spring use esta implementación en vez de la que estaba en memoria, pero sin borrar nada de lo anterior
+
+
 - Mantén el contrato de la interfaz `BlueprintPersistence`.  
+
+  PostgresBlueprintPersistence implementa exactamente la misma interfaz BlueprintPersistence, con los mismos métodos (saveBlueprint, getBlueprint, getBlueprintsByAuthor, getAllBlueprints, addPoint), gracias a eso BlueprintServices y el resto de la aplicación no necesitaron ningún cambio y todo siguió funcionando igual como podemos ver en la siguiente imagen:
+  ![](images/0.png)
 
 ### 3. Buenas prácticas de API REST
 - Cambia el path base de los controladores a `/api/v1/blueprints`.  
@@ -88,8 +99,22 @@ src/main/java/edu/eci/arsw/blueprints
 ### 5. Filtros de *Blueprints*
 - Implementa filtros:
   - **RedundancyFilter**: elimina puntos duplicados consecutivos.  
+
+    Este ya estaba hecho solo se activa cuando corres la app con el perfil redundancy, básicamente recorre la lista de puntos y elimina los que estén repetidos justo después del anterior, O sea, si tienes (1,1),(1,1),(3,3) lo deja en (1,1),(3,3), solo borra los repetidos consecutivos, si todos los puntos son diferentes no toca nada
+
   - **UndersamplingFilter**: conserva 1 de cada 2 puntos.  
+
+    Este también ya estaba implementado y se activa con el perfil undersampling, es más fuerte que el anterior porque simplemente se queda con 1 de cada 2 puntos (los de índice par), sin importar si están repetidos o no, entonces si tienes 6 puntos siempre te va a devolver 3
+
+
 - Activa los filtros mediante perfiles de Spring (`redundancy`, `undersampling`).  
+
+    Para hacer una comparacion de los diferentes filtros inyectamos una nueva consulta y asi es como se ve normalmente:
+  ![](images/normal.png)
+    Asi es como se ve con el filtro de Redundancy:
+  ![](images/redundancy.png)
+    Y asi es como se ve con el filtro de Undersampling:
+  ![](images/undersampling.png)
 
 ---
 

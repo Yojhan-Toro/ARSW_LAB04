@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: blueprints_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: blueprints_db
+      POSTGRES_USER: blueprints_user
+      POSTGRES_PASSWORD: blueprints_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - blueprints_pgdata:/var/lib/postgresql/data
+
+volumes:
+  blueprints_pgdata: 
