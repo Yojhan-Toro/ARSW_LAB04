@@ -119,6 +119,9 @@ BlueprintsServices actúa como intermediario entre el controlador y la persisten
     Y asi es como se ve con el filtro de Undersampling:
   ![](images/undersampling.png)
 
+### 6. Pruebas
+Se implementan pruebas de integracion del controlador REST en la clase BlueprintsAPIControllerTest. Tambien se deja funcionando Actuator para las metricas de la API.
+![](images/actuator.png)
 ---
 
 ## ✅ Entregables
