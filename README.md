@@ -50,9 +50,12 @@ src/main/java/edu/eci/arsw/blueprints
 ## 📖 Actividades del laboratorio
 
 ### 1. Familiarización con el código base
-- Revisa el paquete `model` con las clases `Blueprint` y `Point`.  
+- Revisa el paquete `model` con las clases `Blueprint` y `Point`.
+Point es un simple record con dos coordenadas x e y. Blueprint representa un plano con autor, nombre y una lista de puntos. Usa equals y hashCode basados solo en autor y nombre, lo que significa que dos blueprints son iguales si tienen el mismo autor y nombre, sin importar sus puntos.
 - Entiende la capa `persistence` con `InMemoryBlueprintPersistence`.  
+Implementa la interfaz BlueprintPersistence y almacena los blueprints en memoria usando un ConcurrentHashMap, lo que la hace thread-safe. La clave del mapa es autor:nombre. Ya trae tres blueprints de ejemplo (john/house, john/garage, jane/garden). Expone operaciones para guardar, buscar por autor, buscar por autor+nombre, listar todos y agregar puntos.
 - Analiza la capa `services` (`BlueprintsServices`) y el controlador `BlueprintsAPIController`.
+BlueprintsServices actúa como intermediario entre el controlador y la persistencia, además aplica un filtro (BlueprintsFilter) sobre los blueprints antes de retornarlos. El controlador BlueprintsAPIController expone la API REST y delega toda la lógica al servicio.
 
 ### 2. Migración a persistencia en PostgreSQL
 - Configura una base de datos PostgreSQL (puedes usar Docker).  
@@ -116,6 +119,9 @@ src/main/java/edu/eci/arsw/blueprints
     Y asi es como se ve con el filtro de Undersampling:
   ![](images/undersampling.png)
 
+### 6. Pruebas
+Se implementan pruebas de integracion del controlador REST en la clase BlueprintsAPIControllerTest. Tambien se deja funcionando Actuator para las metricas de la API.
+![](images/actuator.png)
 ---
 
 ## ✅ Entregables
